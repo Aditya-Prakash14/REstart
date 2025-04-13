@@ -1714,7 +1714,7 @@ export default function HomePage() {
                       name: "Chiranjeev Agrawal",
                       role: "CEO",
                       bio: "Visionary leader with extensive experience in education technology and NSAT preparation.",
-                      image: "https://imagekit.io/tools/asset-public-link?detail=%7B%22name%22%3A%22Screenshot%202025-04-13%20at%207.38.38%E2%80%AFPM.png%22%2C%22type%22%3A%22image%2Fpng%22%2C%22signedurl_expire%22%3A%222028-04-12T14%3A08%3A43.713Z%22%2C%22signedUrl%22%3A%22https%3A%2F%2Fmedia-hosting.imagekit.io%2Fda14168ed1ca44ca%2FScreenshot%25202025-04-13%2520at%25207.38.38%25E2%2580%25AFPM.png%3FExpires%3D1839161324%26Key-Pair-Id%3DK2ZIVPTIP2VGHC%26Signature%3Dw4r9q8E8~FxRGFZiEv-PJphyisOKomkdS7Iu-4p0QN05JW17w6ZlM-f3f-EBJ9co6DNgp0Sf4OBAcDhj0CIt8jQw3BIfM8dLWilcGLn-QN~Zdim9tSc5w57lLDvQymZ1h9xfKR2Zx0xP1RJu~s5KAiHTLM0kWd0Gi469Tcfb9SO3nnxwOObqoZD~eFUQ02filsFGhhJlr~68cRfw0m1XyZK5JhouHsnLJnv2F~hevconAbMv1CP9BUCsCnQoGET8LerMqCFe5Dj9uNLKOVZ7WOb3LkcM63ItxWZK~rvX3C1vkjHCnspHdLTRWfFaLU-LYw5jTL036PH2Fa0BtPLbHg__%22%7D",
+                      image: "https://media-hosting.imagekit.io/da14168ed1ca44ca/Screenshot%202025-04-13%20at%207.38.38%E2%80%AFPM.png?Expires=1839161324&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=w4r9q8E8~FxRGFZiEv-PJphyisOKomkdS7Iu-4p0QN05JW17w6ZlM-f3f-EBJ9co6DNgp0Sf4OBAcDhj0CIt8jQw3BIfM8dLWilcGLn-QN~Zdim9tSc5w57lLDvQymZ1h9xfKR2Zx0xP1RJu~s5KAiHTLM0kWd0Gi469Tcfb9SO3nnxwOObqoZD~eFUQ02filsFGhhJlr~68cRfw0m1XyZK5JhouHsnLJnv2F~hevconAbMv1CP9BUCsCnQoGET8LerMqCFe5Dj9uNLKOVZ7WOb3LkcM63ItxWZK~rvX3C1vkjHCnspHdLTRWfFaLU-LYw5jTL036PH2Fa0BtPLbHg__",
                       achievements: ["Education Innovator", "Tech Entrepreneur",]
                     },
                     {
