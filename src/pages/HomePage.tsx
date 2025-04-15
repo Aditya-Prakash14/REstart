@@ -143,50 +143,14 @@ const MouseFollower = () => {
   );
 };
 
-// 3D Card component with tilt effect
+// Simplified TiltCard component without animations
 const TiltCard = ({ children, className }: { children: React.ReactNode, className: string }) => {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const [rotation, setRotation] = useState({ x: 0, y: 0 });
-  const [isHovering, setIsHovering] = useState(false);
-  
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!cardRef.current) return;
-    
-    const rect = cardRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    
-    const rotateX = (y - centerY) / 10;
-    const rotateY = (centerX - x) / 10;
-    
-    setRotation({ x: rotateX, y: rotateY });
-  };
-  
   return (
-    <motion.div
-      ref={cardRef}
-      className={`relative group perspective-1000 ${className}`}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovering(true)}
-      onMouseLeave={() => {
-        setIsHovering(false);
-        setRotation({ x: 0, y: 0 });
-      }}
-      style={{
-        transform: isHovering ? `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)` : "none",
-        transition: isHovering ? "none" : "transform 0.5s ease-out",
-      }}
-    >
-      <div className="relative preserve-3d transition-all duration-200 w-full h-full">
+    <div className={`relative ${className}`}>
+      <div className="relative w-full h-full">
         {children}
-        {isHovering && (
-          <div className="absolute inset-0 bg-primary/10 rounded-lg pointer-events-none" />
-        )}
       </div>
-    </motion.div>
+    </div>
   );
 };
 
@@ -418,7 +382,7 @@ const SupportUsSection = () => {
                   <div className="space-y-2">
                     <h3 className="font-medium">Why Support Us?</h3>
                     <p className="text-sm text-muted-foreground">
-                      Your support helps us create more life-changing content and grow Restart into a movement. Every contribution counts 💙
+                      Your support helps us create more life-changing content and grow REstart into a movement. Every contribution counts 💙
                     </p>
                     <div className="flex flex-wrap gap-2 mt-2">
                       <Badge variant="outline" className="bg-blue-500/10 text-blue-500 border-blue-500/20">
@@ -764,12 +728,24 @@ export default function HomePage() {
                   </p>
                   
                   <div className="flex flex-col sm:flex-row gap-4">
-                    <Button size="lg" className="bg-customBlue hover:bg-customBlue/90 text-white font-medium">
-                      Start Free Trial
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
+                    <Link href="/auth">
+                      <Button size="lg" className="bg-customBlue hover:bg-customBlue/90 text-white font-medium">
+                        Start Free Trial
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </Button>
+                    </Link>
                     
-                    <Button size="lg" variant="outline" className="border-primary/20 text-primary hover:bg-primary/10">
+                    <Button 
+                      size="lg" 
+                      variant="outline" 
+                      className="border-primary/20 text-primary hover:bg-primary/10"
+                      onClick={() => {
+                        document.getElementById('features')?.scrollIntoView({ 
+                          behavior: 'smooth',
+                          block: 'start'
+                        });
+                      }}
+                    >
                       Explore Features
                       <Sparkles className="ml-2 h-4 w-4" />
                     </Button>
@@ -848,34 +824,9 @@ export default function HomePage() {
                     </div>
                     
                     {/* Floating elements */}
-                    <motion.div 
-                      className="absolute -top-6 -right-6 bg-primary text-white p-3 rounded-lg shadow-lg"
-                      animate={float}
-                    >
-                      <div className="flex items-center gap-2">
-                        <Clock className="h-4 w-4" />
-                        <span className="font-medium">Save 200+ hours</span>
-                      </div>
-                    </motion.div>
                     
-                    <motion.div 
-                      className="absolute -bottom-6 -left-6 bg-card border border-border p-3 rounded-lg shadow-lg"
-                      animate={float}
-              transition={{
-                        y: {
-                          duration: 2.5,
-                repeat: Infinity,
-                          repeatType: "reverse",
-                ease: "easeInOut",
-                          delay: 0.5
-                        },
-              }}
-            >
-                      <div className="flex items-center gap-2">
-                        <GraduationCap className="h-4 w-4 text-primary" />
-                        <span className="font-medium">90% Success Rate</span>
-                      </div>
-            </motion.div>
+                    
+                    
                   </div>
                   
                   {/* Background decorative elements */}
@@ -886,136 +837,7 @@ export default function HomePage() {
             </div>
           </section>
           
-          <ParallaxSection depth={0.3}>
-            <section className="py-20 bg-muted/50 relative overflow-hidden">
-              <motion.div
-                className="absolute -top-20 -left-20 w-40 h-40 rounded-full bg-primary/10"
-              animate={{
-                  scale: [1, 1.2, 1],
-                  x: [0, 10, 0],
-                  y: [0, 10, 0],
-              }}
-              transition={{
-                  duration: 8, 
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-              />
-
-              <motion.div
-                className="absolute -bottom-20 -right-20 w-60 h-60 rounded-full bg-primary/5"
-                    animate={{
-                  scale: [1, 1.1, 1],
-                  x: [0, -10, 0],
-                  y: [0, -10, 0],
-                    }}
-                    transition={{
-                  duration: 10, 
-                      repeat: Infinity,
-                  ease: "easeInOut" 
-                }}
-              />
-              
-              <div className="container mx-auto px-4 relative z-10">
-                <motion.h2
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  className="text-4xl font-bold text-center mb-4"
-                >
-                  <ScrollHighlightText className="">Our Comprehensive Subjects</ScrollHighlightText>
-                </motion.h2>
-                
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  className="text-center text-muted-foreground max-w-2xl mx-auto mb-12"
-                >
-                  Master these key areas to excel in your NSAT examination and secure your future in technology.
-                </motion.p>
-                
-                  <motion.div
-                  variants={container}
-                  initial="hidden"
-                  whileInView="show"
-                  viewport={{ once: true }}
-                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
-                >
-                  {[
-                    {
-                      title: "Basic Mathematics",
-                      icon: FileText,
-                      color: "text-blue-500",
-                      description: "Master fundamental mathematical concepts",
-                      gradient: "from-blue-500/20 to-blue-500/5",
-                      stats: [
-                        { label: "Lessons", value: 24 },
-                        { label: "Success Rate", value: "95%" }
-                      ]
-                    },
-                    {
-                      title: "Advanced Mathematics",
-                      icon: GraduationCap,
-                      color: "text-purple-500",
-                      description: "Tackle complex mathematical problems",
-                      gradient: "from-purple-500/20 to-purple-500/5",
-                      stats: [
-                        { label: "Lessons", value: 32 },
-                        { label: "Success Rate", value: "88%" }
-                      ]
-                    },
-                    {
-                      title: "English",
-                      icon: BookOpen,
-                      color: "text-green-500",
-                      description: "Enhance your language and comprehension skills",
-                      gradient: "from-green-500/20 to-green-500/5",
-                      stats: [
-                        { label: "Lessons", value: 28 },
-                        { label: "Success Rate", value: "92%" }
-                      ]
-                    },
-                    {
-                      title: "Logical Reasoning",
-                      icon: BrainCircuit,
-                      color: "text-amber-500",
-                      description: "Develop critical thinking and problem-solving abilities",
-                      gradient: "from-amber-500/20 to-amber-500/5",
-                      stats: [
-                        { label: "Lessons", value: 20 },
-                        { label: "Success Rate", value: "89%" }
-                      ]
-                    }
-                  ].map((subject, index) => (
-                    <TiltCard key={index} className="h-full">
-                      <Card className="h-full overflow-hidden border-none bg-gradient-to-br shadow-lg hover:shadow-xl transition-all duration-300">
-                        <CardContent className="p-6">
-                          <div className={`rounded-full w-12 h-12 flex items-center justify-center mb-4 bg-gradient-to-br ${subject.gradient}`}>
-                            <subject.icon className={`h-6 w-6 ${subject.color}`} />
-                          </div>
-                          
-                          <h3 className="text-xl font-bold mb-2">{subject.title}</h3>
-                          <p className="text-muted-foreground mb-4">{subject.description}</p>
-                          
-                          <div className="grid grid-cols-2 gap-2 mt-4">
-                            {subject.stats.map((stat, statIndex) => (
-                              <div key={statIndex} className="bg-background/50 p-2 rounded-lg">
-                                <div className="text-sm font-medium">{stat.label}</div>
-                                <div className={`text-lg font-bold ${subject.color}`}>{stat.value}</div>
-                              </div>
-                            ))}
-                          </div>
-                        </CardContent>
-                      </Card>
-                    </TiltCard>
-                  ))}
-                </motion.div>
-              </div>
-            </section>
-          </ParallaxSection>
-          
-          <section className="py-20 relative overflow-hidden">
+          <section id="features" className="py-20 relative overflow-hidden">
             <div className="container mx-auto px-4">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -1101,7 +923,7 @@ export default function HomePage() {
                       "Offline access to downloaded materials",
                       "Cloud synchronization across devices"
                     ]
-                  }
+                }
                 ].map((feature, index) => (
                   <motion.div
                     key={index}
@@ -1229,10 +1051,10 @@ export default function HomePage() {
                 className="text-center mb-16"
               >
                 <h2 className="text-4xl font-bold mb-4">
-                  <ScrollHighlightText>Why Choose Our Platform</ScrollHighlightText>
+                  <ScrollHighlightText>What makes us different</ScrollHighlightText>
                 </h2>
                 <p className="text-muted-foreground max-w-2xl mx-auto">
-                  We provide the most comprehensive and effective NSAT preparation experience
+                  Expect nothing but the finest experience of preparation with our platform. We are committed to providing you with the best resources and support to help you succeed.
                 </p>
               </motion.div>
               
@@ -1453,8 +1275,8 @@ export default function HomePage() {
                 
                 {/* Add an interactive map with campus locations */}
                 <div className="mb-16 relative h-[400px] rounded-xl overflow-hidden shadow-xl">
-                  <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3494.7277880078067!2d77.11369491508857!3d28.84067088234654!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d1b1923ada2e3%3A0x1169930518add2fe!2sRayat-Bahra%20University%2C%20Sonipat!5e0!3m2!1sen!2sin!4v1624961273699!5m2!1sen!2sin" 
+                <iframe 
+                    src = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3490.1523393397647!2d77.0874287758143!3d28.982856468085476!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390db1e3451de103%3A0xf3b49ff0baac646f!2sRishihood%20University!5e0!3m2!1sen!2sin!4v1744658435505!5m2!1sen!2sin"
                     width="100%" 
                     height="100%" 
                     style={{ border: 0 }} 
@@ -1466,9 +1288,9 @@ export default function HomePage() {
                   <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-background to-transparent" />
                   
                   <div className="absolute bottom-4 left-4 right-4 p-4 bg-background/80 backdrop-blur-md rounded-lg border border-border/50">
-                    <h3 className="text-lg font-semibold mb-2">Our Campus Locations</h3>
+                    <h3 className="text-lg font-semibold mb-2">NST Campus Locations</h3>
                     <p className="text-sm text-muted-foreground">
-                      Visit our campuses in Sonipat and Pune to experience our facilities firsthand
+                      Visit NST campuses in Sonipat and Pune to experience it firsthand.
                     </p>
                     <div className="flex gap-2 mt-2">
                       <Badge variant="outline" className="bg-blue-500/10 text-blue-500 border-blue-500/20">
@@ -1490,23 +1312,13 @@ export default function HomePage() {
                       city: "Sonipat",
                       address: "NST, RU Campus, Sonipat, Haryana",
                       image: "https://cdn.prod.website-files.com/661123dea3c6c677a806b8b2/662a7109368cae0dea68859e_64956528607323070bb62108_NST%20Open%20Graph.webp",
-                      features: ["Modern Classrooms", "Digital Library", "Discussion Rooms"],
-                      stats: {
-                        students: "500+",
-                        faculty: "50+",
-                        area: "10 acres"
-                      }
+                      features: ["Modern Classrooms", "Digital Library", "Discussion Rooms"]
                     },
                     {
                       city: "Pune",
                       address: "NST ADYPU Campus, Pune, Maharashtra",
                       image: "https://pimwp.s3-accelerate.amazonaws.com/2024/06/1Xs6Cnys-Untitled-design-18.jpg",
-                      features: ["24/7 Study Center", "Mock Test Facility", "Counseling Services"],
-                      stats: {
-                        students: "450+",
-                        faculty: "45+",
-                        area: "8 acres"
-                      }
+                      features: ["24/7 Study Center", "Mock Test Facility", "Counseling Services"]
                     }
                   ].map((campus, index) => (
                     <motion.div
@@ -1534,53 +1346,6 @@ export default function HomePage() {
                               <p className="text-sm text-white/80">{campus.address}</p>
                             </div>
                           </div>
-                          
-                          <CardContent className="p-4">
-                            <div className="grid grid-cols-3 gap-2 mb-4 p-2 bg-muted/30 rounded-lg">
-                              <div className="text-center p-2">
-                                <p className="text-xs text-muted-foreground">Students</p>
-                                <p className="font-bold">{campus.stats.students}</p>
-                              </div>
-                              <div className="text-center p-2">
-                                <p className="text-xs text-muted-foreground">Faculty</p>
-                                <p className="font-bold">{campus.stats.faculty}</p>
-                              </div>
-                              <div className="text-center p-2">
-                                <p className="text-xs text-muted-foreground">Campus Area</p>
-                                <p className="font-bold">{campus.stats.area}</p>
-                              </div>
-                            </div>
-                            
-                            <h4 className="font-medium mb-2 flex items-center gap-2">
-                              <Building className="h-4 w-4 text-primary" />
-                              Campus Features
-                            </h4>
-                            <ul className="space-y-2">
-                              {campus.features.map((feature, fIndex) => (
-                                <li key={fIndex} className="flex items-center gap-2 text-sm">
-                                  <div className="h-1.5 w-1.5 rounded-full bg-primary" />
-                                  {feature}
-                                </li>
-                              ))}
-                            </ul>
-                            
-                            <div className="flex gap-2 mt-4">
-                              <Button 
-                                variant="outline" 
-                                className="flex-1 border-primary/20 text-primary hover:bg-primary/10"
-                                onClick={() => showNotification(`Schedule a visit to ${campus.city} campus`)}
-                              >
-                                Schedule a Visit
-                    </Button>
-                              <Button 
-                                variant="outline" 
-                                className="w-10 aspect-square border-primary/20 text-primary hover:bg-primary/10"
-                                onClick={() => showNotification(`Virtual tour of ${campus.city} campus`)}
-                              >
-                                <ExternalLink className="h-4 w-4" />
-                              </Button>
-                            </div>
-                          </CardContent>
                         </Card>
                       </TiltCard>
                 </motion.div>
@@ -1601,11 +1366,8 @@ export default function HomePage() {
                   className="text-center mb-16"
                 >
                   <h2 className="text-4xl font-bold mb-4">
-                    <ScrollHighlightText>Meet Our Founders</ScrollHighlightText>
+                    <ScrollHighlightText>Meet the Team</ScrollHighlightText>
                   </h2>
-                  <p className="text-muted-foreground max-w-2xl mx-auto">
-                    Our team of experienced educators and industry experts dedicated to your success
-                  </p>
                 </motion.div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
